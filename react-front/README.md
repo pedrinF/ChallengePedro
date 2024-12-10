@@ -1,50 +1,51 @@
-# React + TypeScript + Vite
+ChallengePedro - React Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o frontend do projeto ChallengePedro, desenvolvido com React. Ele permite que você interaja com a API para visualizar e buscar informações de usuários e repositórios do GitHub.
 
-Currently, two official plugins are available:
+Pré-requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Antes de rodar o projeto, é necessário ter os seguintes programas instalados na sua máquina:
 
-## Expanding the ESLint configuration
+ [Node.js](https://nodejs.org/) (versão recomendada: 16.x ou superior)
+ [npm](https://www.npmjs.com/) (gerenciador de pacotes do Node.js, que vem junto com o Node.js)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Passo a Passo para Rodar o Projeto
 
-- Configure the top-level `parserOptions` property like this:
+Clonar o Repositório
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+Primeiramente, caso nao tenha clonado ainda clone o repositório do projeto para o seu ambiente local. Execute o seguinte comando no terminal:
+Lembrando que é necessario ler o readme.md da githubApi para rodar o backend
+git clone https://github.com/pedrinF/ChallengePedro.git
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Navegar até a Pasta do Frontend
+Após clonar o repositório, navegue até a pasta onde o projeto frontend está localizado, que neste caso é react-front:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+cd ChallengePedro/react-front
+3. Instalar Dependências
+Dentro da pasta do projeto (react-front), execute o comando abaixo para instalar todas as dependências necessárias:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+npm install
+Esse comando irá instalar todos os pacotes e bibliotecas definidas no arquivo package.json.
+
+Configurar o Token do GitHub
+Este projeto utiliza a API do GitHub para buscar dados de usuários e repositórios. Para autenticação, você precisará de um token de acesso pessoal do GitHub.
+
+Passos para gerar o token:
+Acesse GitHub Settings > Developer Settings > Personal Access Tokens.
+Clique em Generate new token, escolha as permissões necessárias (geralmente, o acesso público é suficiente) e clique em Generate token.
+Copie o token gerado, pois ele será necessário para a autenticação.
+Configurando o token no projeto:
+Na raiz da pasta react-front, crie um arquivo .env.
+Adicione a seguinte linha ao arquivo .env:
+VITE_GITHUB_TOKEN=seu-token-aqui
+Substitua seu-token-aqui pelo token que você gerou no GitHub.
+
+Rodar a Aplicação Localmente
+Agora que as dependências estão instaladas e o token está configurado, você pode iniciar o servidor de desenvolvimento.
+
+Execute o comando abaixo para rodar o projeto localmente:
+
+npm run dev
+Isso iniciará o servidor de desenvolvimento e você poderá acessar a aplicação no navegador em:
+
+http://localhost:5173

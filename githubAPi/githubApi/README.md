@@ -16,18 +16,17 @@ Interface Simples e Eficiente: Utiliza o padrão WebFlux para garantir que o con
 :wrench: Como Executar
 Clone o repositório:
 
-bash
-git clone https://github.com/tech-pedro/github.git
+
+git clone https://github.com/pedrinF/ChallengePedro.git
 Navegue até a pasta do projeto:
 
-bash
-cd github
+
+cd githubApi
 Certifique-se de que o Maven esteja instalado no seu sistema, e então execute:
 
-bash
+
 mvn clean install
 Execute o projeto com o comando:
 
-bash
 mvn spring-boot:run
 O servidor será iniciado em http://localhost:8080.
