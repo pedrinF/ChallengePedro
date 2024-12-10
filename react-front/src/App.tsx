@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import {
   createTheme,
@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/system';
 
-// Interface para os dados do repositório
+
 interface Repo {
   id: string;
   name: string;
@@ -27,13 +27,13 @@ interface Repo {
   created_at: string;
 }
 
-// Interface para os dados do usuário
+
 interface User {
   avatar_url: string;
   login: string;
 }
 
-// Tema escuro com Material-UI
+
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -54,7 +54,7 @@ const darkTheme = createTheme({
   },
 });
 
-// Tema claro com Material-UI
+
 const lightTheme = createTheme({
   palette: {
     mode: 'light',
@@ -75,7 +75,7 @@ const lightTheme = createTheme({
   },
 });
 
-// Estilo personalizado para o container principal
+
 const MainContainer = styled(Container)`
   min-height: 100vh;
   padding: 20px;
@@ -85,7 +85,7 @@ const MainContainer = styled(Container)`
   justify-content: flex-start;
 `;
 
-// Estilo para o componente de perfil
+
 const UserProfileContainer = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -120,45 +120,49 @@ const GithubSearch = () => {
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
 
-  const fetchUser = async (username: string) => {
-    try {
-      const response = await axios.get(`https://api.github.com/users/${username}`);
-      setUser(response.data);
-    } catch (error) {
-      console.error('Erro ao buscar dados do usuário:', error);
-      setUser(null);
-    }
-  };
-
-  const fetchRepos = async (username: string) => {
+  const fetchUserDataAndRepos = async (username: string) => {
     if (!username.trim()) {
       alert('Por favor, insira um nome de usuário válido.');
       return;
     }
-
+  
     setLoading(true);
-
+  
     try {
       const token = import.meta.env.VITE_GITHUB_TOKEN;
-
+  
       if (!token) {
         throw new Error('Token de autenticação não encontrado ou inválido!');
       }
-
-      const response = await axios.get(`http://localhost:8080/api/v1/repos/${username}`, {
+  
+      
+      const reposResponse = await axios.get(`http://localhost:8080/api/v1/repos/${username}`, {
         headers: {
           token: token,
         },
       });
-
-      setRepos(response.data);
-      fetchUser(username); // Buscar as informações do usuário quando repositórios forem encontrados
+  
+      
+      setRepos(reposResponse.data);
+  
+      
+      const userData = reposResponse.data[0]?.owner;  
+  
+      if (userData) {
+        setUser({
+          avatar_url: userData.avatar_url,  
+          login: userData.login,            
+        });
+      }
     } catch (error: any) {
-      console.error('Erro:', error.response ? error.response.data : error.message);
+      console.error('Erro ao buscar dados:', error.response ? error.response.data : error.message);
+      setUser(null); 
+      setRepos([]);   
     } finally {
       setLoading(false);
     }
   };
+  
 
   const CreationDate = ({ createdAt }: { createdAt: string }) => {
     const date = new Date(createdAt);
@@ -204,7 +208,7 @@ const GithubSearch = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => fetchRepos(username)}
+            onClick={() => fetchUserDataAndRepos(username)}
             disabled={loading}
           >
             {loading ? <CircularProgress size={24} /> : 'Buscar'}
