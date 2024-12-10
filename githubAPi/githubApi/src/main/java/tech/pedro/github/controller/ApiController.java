@@ -18,7 +18,7 @@ public class ApiController {
     }
 
 
-
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping(value = "/repos/{username}")
     public ResponseEntity<List<RepositoryResponse>> listUserRepositories(
             @RequestHeader(value = "token") String personalAccesToken,

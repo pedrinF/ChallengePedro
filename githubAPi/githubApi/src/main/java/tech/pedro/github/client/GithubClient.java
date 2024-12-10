@@ -13,6 +13,6 @@ public interface GithubClient {
     List<RepositoryResponse> getRepositories(@RequestHeader("Authorization") String token,
                                              @RequestHeader(value = "X-GitHub-Api-Version", defaultValue = "2022-11-28")
                                              String githubApiVersion,
-                                             @RequestParam(value = "visibility", defaultValue = "public") String visibility,
+                                             @RequestParam(value = "visibility", defaultValue = "all") String visibility,
                                              @PathVariable("username") String username);
 }
